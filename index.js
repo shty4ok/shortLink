@@ -19,29 +19,20 @@ app.listen(port, '127.0.0.1', () => console.log(`Example ${port}`));
 //     }
 // });
 
-// app.post('/', (req, res) => {
-//     let obj = {};
-//     obj.shortLink = randomLink();
-//     obj.longLink = req.body.link;
-//     obj.buttonKey = !!req.body.with_button_checkbox;
-//     Links.create(obj)
-//         .then(() => {
-//             console.log(obj.shortLink);
-//             obj.shortLink = 'http://localhost:3000/url/' + obj.shortLink;
-//             res.render('short-link-view', obj, (err, html) => {
-//                 if (err) {
-//                     console.error(err);
-//                     res.status(500).end();
-//                 } else {
-//                     res.send(html);
-//                 }
-//             })
-//         })
-// });
+app.post('/api/link', (req, res) => {
+    let obj = {};
+    obj.shortLink = randomLink();
+    obj.longLink = req.body.link;
+    obj.buttonKey = !!req.body.with_button_checkbox;
+    Links.create(obj)
+        .then(() => {
+            console.log(obj.shortLink);
+            obj.shortLink = 'http://localhost:3000/url/' + obj.shortLink;
+            res.json(obj);
+        })
+});
 
-const urlencodedParser = bodyParser.urlencoded({extended:false});
-
-app.post('/', urlencodedParser, (req, res) => {
+app.post('/', bodyParser, (req, res) => {
     if(!req.body) return res.status(400);
     console.log(req.body);
     res.send(`${req.body.link}`);
