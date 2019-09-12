@@ -28,7 +28,7 @@ app.post('/api/link', (req, res) => {
         .then(() => {
             console.log(obj.shortLink);
             obj.shortLink = 'http://localhost:3000/url/' + obj.shortLink;
-            res.json(obj);
+            res.json(obj.shortLink);
         })
 });
 
