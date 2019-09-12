@@ -1,12 +1,29 @@
+html, head, body {
+    margin: 0;
+    padding: 0;
+}
+
 input {
-    position: relative;
     display: inline-block;
     margin: 10px;
 }
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+}
+
 form {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    border: black 1px solid;
+    align-content: center;
+}
+
+img {
 }

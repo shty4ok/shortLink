@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,16 +9,20 @@
     <title>Document</title>
 </head>
 <body>
-<form method="post" action="/">
+    <form method="post" action="/" name="formName">
+        <img src="http://familia.spb.ru/application/views/body/front/main/new_v_files/images/fl_content/yaht-club_i_park/3.jpg">
         <input type="text" size="40" name="link" placeholder="Enter long link">
     <div>
-        <label>
+        <label >
             <input type="checkbox" value="to" name="with_button_checkbox">With button
         </label>
     </div>
     <div>
         <input type="submit" value="OK">
     </div>
+
 </form>
+    <div><input type="text" value="{{linkRes}}}"></div>
+    <script src="../ajax.js"></script>
 </body>
 </html>
