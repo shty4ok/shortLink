@@ -10,7 +10,7 @@ window.onload = function () {
         request.open('POST', '/api/link', true);
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener('load', () => {
-            linkRes.value = JSON.parse(request.response);
+            linkRes.value = 'http://localhost:3000/url/' + JSON.parse(request.response);
         });
         request.send(longLink);
     });
