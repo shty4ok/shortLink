@@ -18,8 +18,13 @@ app.post('/api/link', (req, res) => {
     obj.longLink = req.body.link;
     obj.buttonKey = !!req.body.with_button_checkbox;
     //для базы данных Link запишим обьект obj, а после этого выполняется then
-    let wtnObj = createTables(obj);
-    res.json(obj.shortLink);
+    Links.create(obj)
+        .then(() => {
+            console.log(obj.shortLink);
+            obj.shortLink = obj.shortLink;
+            console.log(obj.shortLink);
+            res.json(obj.shortLink);
+        })
 });
 
 
@@ -36,9 +41,6 @@ app.get('/api/link/:shortLink', (req, res) => {
     })
 });
 
-function createTables(obj) {
-    Links.create(obj);
-}
 function randomLink() {
     return Math.random().toString(36).slice(-8);
 }
