@@ -15,11 +15,9 @@ app.listen(port, '127.0.0.1', () => console.log(`Example ${port}`));
 
 app.post('/api/link', (req, res) => {
     let obj = {};
-	console.dir(req.body);
     obj.shortLink = randomLink();
     obj.longLink = req.body.link;
     obj.buttonKey = !!req.body.with_button_checkbox;
-	console.dir(obj);
     //для базы данных Link запишим обьект obj, а после этого выполняется then
     Links.create(obj)
         .then(() => {

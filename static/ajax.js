@@ -12,8 +12,6 @@ window.onload = function () {
         request.addEventListener('load', () => {
             linkRes.value = 'http://localhost:3000/url/' + JSON.parse(request.response);
         });
-	    console.dir({ link: longLink });
-	    console.dir(JSON.stringify({ link: longLink }));
         request.send(JSON.stringify({ link: longLink }));
     });
 };
