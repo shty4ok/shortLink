@@ -8,6 +8,7 @@ const { Links } = db;
 
 app.engine('html', HTMLing.express(__dirname + '/views/'));
 app.set('view engine','html');
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('static'));
 app.listen(port, '127.0.0.1', () => console.log(`Example ${port}`));
@@ -20,14 +21,9 @@ app.post('/api/link', (req, res) => {
     //для базы данных Link запишим обьект obj, а после этого выполняется then
     Links.create(obj)
         .then(() => {
-            console.log(obj.shortLink);
-            obj.shortLink = obj.shortLink;
-            console.log(obj.shortLink);
-            res.json(obj.shortLink);
+             res.json(obj.shortLink);
         })
 });
-
-
 app.post('/', bodyParser, (req, res) => {
     if(!req.body) return res.status(400);
     // console.log(req.body);
@@ -43,4 +39,4 @@ app.get('/api/link/:shortLink', (req, res) => {
 
 function randomLink() {
     return Math.random().toString(36).slice(-8);
-}
+};
