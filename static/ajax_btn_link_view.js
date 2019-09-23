@@ -1,14 +1,9 @@
 window.onload = function () {
-    document.getElementById('submit').addEventListener('click', (e) => {
+    document.getElementById('btnLongLink').addEventListener('click', (e) => {
         e.preventDefault();
 
-        const formName = document.forms['formName'];
-        let longLink = formName.elements['link'].value;
-        let with_button_checkbox = formName.elements['with_button_checkbox'].value;
-
-
         let request = new XMLHttpRequest();
-        request.open('POST', '/api/link', true);
+        request.open('GET', '/api/', true);
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener('load', () => {
             let linkRes = document.getElementById('linkRes');

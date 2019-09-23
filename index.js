@@ -13,6 +13,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('static'));
 app.listen(port, '127.0.0.1', () => console.log(`Example ${port}`));
 
+app.get('/api/:changeLink', (req, res) => {
+
+});
 app.post('/api/link', (req, res) => {
     let obj = {};
     obj.shortLink = randomLink();
@@ -29,11 +32,16 @@ app.post('/', bodyParser, (req, res) => {
     // console.log(req.body);
     res.send(`${req.body.link}`);
 });
-app.get('/api/link/:shortLink', (req, res) => {
-    Links.findOne({where: {shortLink: req.params.shortLink},
+app.get('/:shortLinkRes', (req, res) => {
+    Links.findOne({where: {shortLink: req.params.shortLinkRes},
             attributes: ['buttonKey', 'longLink']
-    }).then((project) => {
-        console.log(JSON.stringify(project));
+    }).then((linkInstance) => {
+        if(!linkInstance.buttonKey) {
+            // перенаправляем по заголовку Location
+            res.redirect(linkInstance.longLink);
+        } else {
+            res.render('button-link-view');
+        }
     })
 });
 
