@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('static'));
 app.listen(port, '127.0.0.1', () => console.log(`Example ${port}`));
 
-app.get('/api/:changeLink', (req, res) => {
+app.get('/', (req, res) => {
 
 });
 app.post('/api/link', (req, res) => {
@@ -21,6 +21,7 @@ app.post('/api/link', (req, res) => {
     obj.shortLink = randomLink();
     obj.longLink = req.body.link;
     obj.buttonKey = !!req.body.with_button_checkbox;
+    console.dir(obj);
     //для базы данных Link запишим обьект obj, а после этого выполняется then
     Links.create(obj)
         .then(() => {
@@ -36,11 +37,15 @@ app.get('/:shortLinkRes', (req, res) => {
     Links.findOne({where: {shortLink: req.params.shortLinkRes},
             attributes: ['buttonKey', 'longLink']
     }).then((linkInstance) => {
-        if(!linkInstance.buttonKey) {
+        if(!linkInstance) {
             // перенаправляем по заголовку Location
-            res.redirect(linkInstance.longLink);
+            res.redirect('http://127.0.0.1:3000/');
         } else {
-            res.render('button-link-view');
+            if(linkInstance.buttonKey) {
+                res.render('button-link-view');
+            } else {
+                res.redirect(linkInstance.longLink);
+            }
         }
     })
 });

@@ -5,6 +5,7 @@ window.onload = function () {
         const formName = document.forms['formName'];
         let longLink = formName.elements['link'].value;
         let with_button_checkbox = formName.elements['with_button_checkbox'].value;
+        console.log(with_button_checkbox);
 
 
         let request = new XMLHttpRequest();
@@ -12,6 +13,7 @@ window.onload = function () {
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener('load', () => {
             let linkRes = document.getElementById('linkRes');
+            console.log(with_button_checkbox);
             //Example: JSON.parse('"foo"');  // "foo"
             linkRes.value = 'http://localhost:3000/' + JSON.parse(request.response);
         });
