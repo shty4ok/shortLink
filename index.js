@@ -32,7 +32,7 @@ app.post('/', bodyParser, (req, res) => {
     res.send(`${req.body.link}`);
 });
 
-app.get('/:shortLinkRes', (req, res) => {
+app.get('/res/:shortLinkRes', (req, res) => {
     Links.findOne({where: {shortLink: req.params.shortLinkRes},
             attributes: ['buttonKey', 'longLink']
     }).then((linkInstance) => {
