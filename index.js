@@ -13,14 +13,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('static'));
 app.listen(port, '127.0.0.1', () => console.log(`Example ${port}`));
 
-app.get('/', (req, res) => {
 
-});
 app.post('/api/link', (req, res) => {
     let obj = {};
     obj.shortLink = randomLink();
     obj.longLink = req.body.link;
-    obj.buttonKey = !!req.body.with_button_checkbox;
+    obj.buttonKey = !!req.body.checkbox;
     console.dir(obj);
     //для базы данных Link запишим обьект obj, а после этого выполняется then
     Links.create(obj)
@@ -33,20 +31,16 @@ app.post('/', bodyParser, (req, res) => {
     // console.log(req.body);
     res.send(`${req.body.link}`);
 });
+
 app.get('/:shortLinkRes', (req, res) => {
     Links.findOne({where: {shortLink: req.params.shortLinkRes},
             attributes: ['buttonKey', 'longLink']
     }).then((linkInstance) => {
-        if(!linkInstance) {
-            // перенаправляем по заголовку Location
-            res.redirect('http://127.0.0.1:3000/');
-        } else {
             if(linkInstance.buttonKey) {
-                res.render('button-link-view');
+                res.send(html.render('button-link-view'), {script: linkInstance});
             } else {
                 res.redirect(linkInstance.longLink);
             }
-        }
     })
 });
 
