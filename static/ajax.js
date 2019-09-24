@@ -4,9 +4,7 @@ window.onload = function () {
 
         const formName = document.forms['formName'];
         let longLink = formName.elements['link'].value;
-        let with_button_checkbox = formName.elements['with_button_checkbox'].value;
-        console.log(with_button_checkbox);
-
+        let with_button_checkbox = formName.elements['with_button_checkbox'].checked;
 
         let request = new XMLHttpRequest();
         request.open('POST', '/api/link', true);

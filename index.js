@@ -31,13 +31,17 @@ app.post('/', bodyParser, (req, res) => {
     // console.log(req.body);
     res.send(`${req.body.link}`);
 });
-
+app.post('/longLink/', (req, res) => {
+    Links.findOne({where: {shortLink: req.body.submitBtn}.then(instance => {
+        res.send(instance);
+    })})
+});
 app.get('/res/:shortLinkRes', (req, res) => {
     Links.findOne({where: {shortLink: req.params.shortLinkRes},
             attributes: ['buttonKey', 'longLink']
     }).then((linkInstance) => {
-            if(linkInstance.buttonKey) {
-                res.send(html.render('button-link-view'), {script: linkInstance});
+            if(!!linkInstance.buttonKey) {
+                res.render('button-link-view', {script: req.params.shortLinkRes});
             } else {
                 res.redirect(linkInstance.longLink);
             }
