@@ -31,20 +31,25 @@ app.post('/', bodyParser, (req, res) => {
     // console.log(req.body);
     res.send(`${req.body.link}`);
 });
-app.post('/longLink/', (req, res) => {
+app.post('/longLink', bodyParser, (req, res) => {
+    console.log(JSON.stringify(req.body.submitBtn));
     Links.findOne({where: {shortLink: req.body.submitBtn}.then(instance => {
         res.send(instance);
     })})
 });
 app.get('/res/:shortLinkRes', (req, res) => {
     Links.findOne({where: {shortLink: req.params.shortLinkRes},
-            attributes: ['buttonKey', 'longLink']
+            attributes: ['longLink','buttonKey']
     }).then((linkInstance) => {
-            if(!!linkInstance.buttonKey) {
+        console.log(linkInstance.buttonKey);
+            // if(!!linkInstance.buttonKey) {
+                console.log('1');
                 res.render('button-link-view', {script: req.params.shortLinkRes});
-            } else {
-                res.redirect(linkInstance.longLink);
-            }
+            // }
+                // else {
+                console.log('2');
+                // res.redirect(linkInstance.longLink);
+            // }
     })
 });
 
