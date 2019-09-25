@@ -8,11 +8,14 @@
     <title>Button link View</title>
 </head>
 <body>
-    <form method="post" action="/longLink" name="formLongLink">
-        <input type="button" id="submitBtn" value="1">
-        <p id="result" name="result" value="{{script}}"></p>
+    <form method="POST" action="/" name="formLongLink">
+
+        <input type="text" id="result" name="result" value="1">
+        <input type="submit" id="submitBtn" value="get Link">
     </form>
+
+    <h1><input type="text" id="resultLink"></h1>
     {{script}}
-<!--    <script src="ajax_button.js"></script>-->
+    <script src="../static/ajax_button.js"></script>
 </body>
 </html>

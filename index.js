@@ -14,7 +14,7 @@ app.use(express.static('static'));
 app.listen(port, '127.0.0.1', () => console.log(`Example ${port}`));
 
 
-app.post('/api/link', (req, res) => {
+app.post('/api/link',  (req, res) => {
     let obj = {};
     obj.shortLink = randomLink();
     obj.longLink = req.body.link;
@@ -31,25 +31,25 @@ app.post('/', bodyParser, (req, res) => {
     // console.log(req.body);
     res.send(`${req.body.link}`);
 });
-app.post('/longLink', bodyParser, (req, res) => {
-    console.log(JSON.stringify(req.body.submitBtn));
-    Links.findOne({where: {shortLink: req.body.submitBtn}.then(instance => {
-        res.send(instance);
-    })})
+app.post('/longLink', (req, res) => {
+    console.log('WORK AJAX_button.js ' + req.body.shortLnk);
+    Links.findOne({where: {shortLink: req.body.shortLnk}}).then((instance) => {
+            res.json(instance.longLink);
+    })
 });
 app.get('/res/:shortLinkRes', (req, res) => {
     Links.findOne({where: {shortLink: req.params.shortLinkRes},
             attributes: ['longLink','buttonKey']
     }).then((linkInstance) => {
         console.log(linkInstance.buttonKey);
-            // if(!!linkInstance.buttonKey) {
+            if(!!linkInstance.buttonKey) {
                 console.log('1');
                 res.render('button-link-view', {script: req.params.shortLinkRes});
-            // }
-                // else {
+            }
+                else {
                 console.log('2');
-                // res.redirect(linkInstance.longLink);
-            // }
+                res.redirect(linkInstance.longLink);
+            }
     })
 });
 
