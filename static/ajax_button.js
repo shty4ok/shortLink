@@ -12,7 +12,8 @@ window.onload = function () {
         request.addEventListener('load', () => {
             let resultLink = document.getElementById('resultLink');
             //Example: JSON.parse('"foo"');  // "foo"
-            resultLink.value = JSON.parse(request.response);
+            // resultLink.value = JSON.parse(request.response);
+            location = JSON.parse(request.response);
         });
         //Example: JSON.stringify({ x: 5, y: 6 }); //'{"x":5,"y":6}' or '{"y":6,"x":5}'
         request.send(JSON.stringify({shortLnk: shortLinkForm}));
