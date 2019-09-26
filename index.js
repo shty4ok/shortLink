@@ -38,10 +38,10 @@ app.post('/longLink', (req, res) => {
     })
 });
 app.get('/res/:shortLinkRes', (req, res) => {
-    Links.findOne({where: {shortLink: req.params.shortLinkRes},
+        Links.findOne({where: {shortLink: req.params.shortLinkRes},
             attributes: ['longLink','buttonKey']
-    }).then((linkInstance) => {
-        console.log(linkInstance.buttonKey);
+        }).then((linkInstance) => {
+            console.log(linkInstance.buttonKey);
             if(!!linkInstance.buttonKey) {
                 console.log('1');
                 res.render('button-link-view', {script: req.params.shortLinkRes});
