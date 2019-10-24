@@ -15,24 +15,24 @@ app.listen(port, '127.0.0.1', () => console.log(`Example ${port}`));
 
 
 app.post('/api/link',  (req, res) => {
-    let obj = {};
-    obj.shortLink = randomLink();
-    obj.longLink = req.body.link;
-    obj.buttonKey = !!req.body.checkbox;
-    console.dir(obj);
-    //для базы данных Link запишим обьект obj, а после этого выполняется then
-    Links.create(obj)
-        .then(() => {
-             res.json(obj.shortLink);
-        })
-});
-app.post('/', bodyParser, (req, res) => {
-    if(!req.body) return res.status(400);
-    // console.log(req.body);
-    res.send(`${req.body.link}`);
+    let obj = {status: false};
+    const re1 = /^[a-z]+\:\/\/[a-z]+(([a-z]+)?(\.)?([a-z]+)?)+(\S+[a-z]+)?/gm;
+    if(re1.test(req.body.link)) {
+        console.log('RegExp work');
+
+        obj.shortLink = randomLink();
+        obj.longLink = req.body.link;
+        obj.buttonKey = !!req.body.checkbox;
+        obj.status = true;
+        Links.create(obj)
+            .then(() => {
+                res.json(obj.shortLink);
+            });
+    } else {
+        res.sendStatus(400);
+    }
 });
 app.post('/longLink', (req, res) => {
-    console.log('WORK AJAX_button.js ' + req.body.shortLnk);
     Links.findOne({where: {shortLink: req.body.shortLnk}}).then((instance) => {
             res.json(instance.longLink);
     })
